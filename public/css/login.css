@@ -1,0 +1,46 @@
+#login {
+    height: 100%;
+}
+
+#content{
+    padding-top: 100px;
+}
+
+#copy{
+    height: 40px;
+    margin-top: -40px;
+}
+
+
+
+/* Sign In */
+
+.form-sign-in {
+    width: 500px;
+    margin: 0 auto;
+    padding: 2rem .5rem;
+}
+
+.form-row {
+    padding: .5rem;
+}
+
+.notice {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    margin-top: -100px;
+}
+
+
+
+
+
+
+
+
+
+/* Register */
+
+
+

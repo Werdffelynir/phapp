@@ -62,12 +62,12 @@ class LoginController extends \Phalcon\Mvc\Controller
             $response = new Response();
 
             // tmp
-            if ($status)
-                return $this->response->redirect('/');
+            //if ($status)
+            //    return $this->response->redirect('/');
 
             return $response->setJsonContent([
                 "status" => $status ? "OK" : "ERROR",
-                "messages" => $messages,
+                "message" => $messages,
             ]);
         }
 
@@ -81,9 +81,12 @@ class LoginController extends \Phalcon\Mvc\Controller
         $username = $this->request->getPost('username', 'string');
         $password = $this->request->getPost('password', 'string');
 
+
         if (!empty($username) && !empty($password) &&
             strlen($username) > 4 && strlen($password) > 4
         ) {
+            $response = new Response();
+
             $user = Users::findFirst([
                 'conditions' => 'username = :username:',
                 'bind'       => [
@@ -91,24 +94,23 @@ class LoginController extends \Phalcon\Mvc\Controller
                 ],
             ]);
 
-            if (false !== $user) {
+            if ($user) {
                 $check = $this->security->checkHash($password, $user->password);
 
                 if ($check) {
                     $this->session->set('userEmail', $user->email);
-
-                    // tmp
-                    return $this->response->redirect('/');
                 }
-
-                $response = new Response();
 
                 return $response->setJsonContent([
                     "status" => $check ? "OK" : "ERROR",
+                    "message" => $check ? "" : "Wrong password",
                 ]);
 
             } else {
-                $this->security->hash(rand());
+                return $response->setJsonContent([
+                    "status" => "ERROR",
+                    "message" => "Users not exist",
+                ]);
             }
         }
 
